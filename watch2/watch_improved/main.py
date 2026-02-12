@@ -291,8 +291,15 @@ async def websocket_endpoint(websocket: WebSocket, room_id: str, user_name: str)
                 "count": rooms[room_id].get_users_count()
             })
 
+import os
+
 if __name__ == "__main__":
-    print("🎬 Watch Together Server")
-    print("📺 Открой: http://localhost:8000")
-    print("🎭 Галерея: http://localhost:8000/gallery")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # Читаем порт, который дает Railway, иначе берем 8000
+    port = int(os.environ.get("PORT", 8000))
+    print(f"🎬 Watch Together Server starting on port {port}")
+    uvicorn.run(app, host="0.0.0.0", port=port)
+# if __name__ == "__main__":
+#     print("🎬 Watch Together Server")
+#     print("📺 Открой: http://localhost:8000")
+#     print("🎭 Галерея: http://localhost:8000/gallery")
+#     uvicorn.run(app, host="0.0.0.0", port=8000)
