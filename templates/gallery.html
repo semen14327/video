@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея комнат</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body class="bg-zinc-950 text-white min-h-screen p-4">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-2xl font-bold mb-2">🎬 Сейчас смотрят</h1>
+        <p class="text-sm text-zinc-400 mb-6">Присоединяйся к активным комнатам</p>
+        
+        {% if rooms %}
+            <div class="space-y-3">
+                {% for room in rooms %}
+                <a href="/?room={{ room.id }}" 
+                   class="block bg-zinc-900 p-4 rounded-lg border border-zinc-800 hover:border-blue-500 transition">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="font-bold">Комната {{ room.id }}</div>
+                        <div class="text-xs bg-blue-600 px-2 py-1 rounded">
+                            👥 {{ room.viewers }}
+                        </div>
+                    </div>
+                    <div class="text-sm text-zinc-400 truncate">
+                        {% if room.source == 'youtube' %}
+                            🎥 YouTube
+                        {% elif room.source == 'mp4' %}
+                            📹 Видео
+                        {% endif %}
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-12 text-zinc-500">
+                <div class="text-4xl mb-4">🎭</div>
+                <div class="text-sm">Пока нет активных комнат</div>
+                <div class="text-xs mt-2">Создай первую!</div>
+                <a href="/" class="inline-block mt-4 bg-blue-600 px-4 py-2 rounded text-sm font-bold">
+                    Создать комнату
+                </a>
+            </div>
+        {% endif %}
+        
+        <div class="mt-6 text-center">
+            <a href="/" class="text-blue-400 text-sm underline">← Назад</a>
+        </div>
+    </div>
+    
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+    </script>
+</body>
+</html>
